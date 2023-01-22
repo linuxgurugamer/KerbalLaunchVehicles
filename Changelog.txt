@@ -1,0 +1,14 @@
+Changelog
+
+1.2.0
+	Adoption by Linuxgurugamer
+	Created repo and added to Github
+	Added AssemblyVersion.tt
+	Added InstallChecker
+	Moved DLL into Plugins directory
+	Added support for ToolbarController & Click Through Blocker
+	Updated button for better visibility
+	Add JNSQ config
+	Added OPM config
+	Add selection of default config to use
+	Added a "Remove All" button

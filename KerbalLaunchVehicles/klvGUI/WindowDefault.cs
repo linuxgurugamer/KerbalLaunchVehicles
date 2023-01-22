@@ -3,15 +3,17 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using ToolbarControl_NS;
+using ClickThroughFix;
 
 namespace KerbalLaunchVehicles.klvGUI
 {
     internal class WindowDefault : MonoBehaviour
     {
-        private Texture2D KLVButtonImage;
-        private ApplicationLauncherButton LauncherButton;
-        protected ApplicationLauncher.AppScenes visibleInScenes;
-        protected bool isWindowOpen;
+        //private Texture2D KLVButtonImage;
+        //private ApplicationLauncherButton LauncherButton;
+        //protected ApplicationLauncher.AppScenes visibleInScenes;
+        protected static bool isWindowOpen;
 
         protected Vector2 scrollPos;
         protected Dictionary<DropDown, bool> MarkedCombos;
@@ -20,9 +22,13 @@ namespace KerbalLaunchVehicles.klvGUI
         protected ViewTab openTab = ViewTab.Families;
         private bool firstRun = true;
 
+        internal const string MODID = "KLVs_NS";
+        internal const string MODNAME = "Kerbal Launch Vehicles";
+        ToolbarControl toolbarControl;
+
         public virtual void Awake()
         {
-            visibleInScenes = ApplicationLauncher.AppScenes.NEVER;
+            //visibleInScenes = ApplicationLauncher.AppScenes.NEVER;
             isWindowOpen = false;
             Title = "Kerbal Launch Vehicles";
             GUIUtilities.Log("[MOD] KLV window awake");
@@ -32,8 +38,22 @@ namespace KerbalLaunchVehicles.klvGUI
         {
             KLVCore.Load();
             var App = ApplicationLauncher.Instance;
-            KLVButtonImage = GameDatabase.Instance.GetTexture("KerbalLaunchVehicles/Assets/launcherIcon", false);
-            LauncherButton = App.AddModApplication(OnLauncherButtonPress, OnLauncherButtonPress, null, null, null, null, visibleInScenes, KLVButtonImage);
+            //KLVButtonImage = GameDatabase.Instance.GetTexture("KerbalLaunchVehicles/Assets/launcherIcon", false);
+            //LauncherButton = App.AddModApplication(OnLauncherButtonPress, OnLauncherButtonPress,  null, null, null, null, visibleInScenes, KLVButtonImage);
+
+            if (toolbarControl == null)
+            {
+                toolbarControl = gameObject.AddComponent<ToolbarControl>();
+                toolbarControl.AddToAllToolbars(OnLauncherButtonPress, OnLauncherButtonPress,
+                    ApplicationLauncher.AppScenes.SPH | ApplicationLauncher.AppScenes.VAB | ApplicationLauncher.AppScenes.SPACECENTER,
+                    MODID,
+                    "PreciseEditorButton",
+                    "KerbalLaunchVehicles/PluginData/Assets/launcherIcon",
+                    "KerbalLaunchVehicles/PluginData/Assets/launcherIcon",
+                    MODNAME
+                );
+
+            }
             GUIUtilities.Log("[MOD] KLV window start");
             ActiveCombos = new HashSet<DropDown>();
             MarkedCombos = new Dictionary<klvGUI.DropDown, bool>();
@@ -51,14 +71,14 @@ namespace KerbalLaunchVehicles.klvGUI
 
             if (isWindowOpen)
             {
-                WindowRect = GUILayout.Window(GetType().FullName.GetHashCode(), WindowRect, OnWindow, Title, klvGUIStyles.StandardWindow, new GUILayoutOption[0]);
+                WindowRect =ClickThruBlocker.GUILayoutWindow(GetType().FullName.GetHashCode(), WindowRect, OnWindow, Title, klvGUIStyles.StandardWindow, new GUILayoutOption[0]);
 
                 // Need to call popup draws from here as the are new windows   
                 foreach (var cbo in ActiveCombos)
                 {
                     if (cbo.isExpanded)
                     {
-                        GUILayout.Window(cbo.GetHashCode(), cbo.GetDrawRect().AddPosition(WindowRect), cbo.OnWindow, "", klvGUIStyles.PopupWindow);
+                        ClickThruBlocker.GUILayoutWindow(cbo.GetHashCode(), cbo.GetDrawRect().AddPosition(WindowRect), cbo.OnWindow, "", klvGUIStyles.PopupWindow);
                         GUI.BringWindowToFront(cbo.GetHashCode());
                     }
                 }
@@ -106,10 +126,13 @@ namespace KerbalLaunchVehicles.klvGUI
         public void OnDisable()
         {
             isWindowOpen = false;
+#if false
             if (LauncherButton != null)
             {
                 ApplicationLauncher.Instance.RemoveModApplication(LauncherButton);
             }
+#endif
+
             SaveManager.SaveSettings();
         }
 
@@ -225,7 +248,8 @@ namespace KerbalLaunchVehicles.klvGUI
 
         private object textOutput;
         protected void LayoutTextInput(GUITextBox textBox, GUIButton button, Func<string, bool> isValid, string invalidMessage, bool showButtonIfEmpty = false,
-            GUIStyle validStyle = null, GUIStyle invalidStyle = null)
+            
+            GUIStyle validStyle = null, GUIStyle invalidStyle = null,  bool showAltButtonIfEmpty = false)
         {
             GUILayout.BeginHorizontal();
             textOutput = textBox.DoLayout();
@@ -241,9 +265,16 @@ namespace KerbalLaunchVehicles.klvGUI
                     button.DoLayout(invalidStyle ?? klvGUIStyles.WarningButton, invalidMessage, "");
                 }
             }
-            else if(showButtonIfEmpty)
+            else
             {
-                button.DoLayout(invalidStyle ?? klvGUIStyles.WarningButton, "No Name!", "");
+                if (showAltButtonIfEmpty)
+                {
+                    button.DoLayout(validStyle ?? klvGUIStyles.StandardButton, null, invalidMessage);
+                }
+                if (showButtonIfEmpty)
+                {
+                    button.DoLayout(invalidStyle ?? klvGUIStyles.WarningButton, "No Name!", "");
+                }
             }
             GUILayout.EndHorizontal();
         }

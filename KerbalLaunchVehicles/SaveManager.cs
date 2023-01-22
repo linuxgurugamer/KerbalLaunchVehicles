@@ -10,6 +10,7 @@ namespace KerbalLaunchVehicles
     internal static class SaveManager
     {
         private static readonly string modFolder = KSPUtil.ApplicationRootPath + "GameData/KerbalLaunchVehicles/";
+        private static readonly string defaultsFolder = modFolder + "PluginData/DefaultConfigs/";
         private static string saveFolder;
         private static string configPath;
         internal static string vehiclesPath { get; private set; }
@@ -77,23 +78,55 @@ namespace KerbalLaunchVehicles
         private const string key_EditorWindowPos = "EDITWINDOW";
         private const string key_DropVehicle = "ENABLEDROPZONE";
 
-        private static void LoadRootNode()
+        private static void LoadRootNode(string file = null)
         {
             RefreshPaths();
+            if (file == null)
             rootNode = ConfigNode.Load(configPath);
+            else
+                rootNode = ConfigNode.Load(file);
         }
 
         // Destinations
-
-        internal static List<Destination> LoadDestinationDefinitions()
+        internal class Destinations
         {
-            LoadRootNode();
+            internal string descr;
+            internal List<Destination> destinationList;
+
+            internal Destinations(string descr, List<Destination> destination)
+            {
+                this.descr = descr;
+                destinationList = destination;
+            }
+        }
+        
+        internal static List<Destinations> GetDefaultDestinations()
+        {
+            var defaultDestinations = new List<Destinations>();
+            var files = Directory.GetFiles(defaultsFolder, "*.cfg");
+            foreach (var f in files)
+            {
+                
+                var d = LoadDestinationDefinitions(out string descr, f);
+                defaultDestinations.Add(new Destinations(descr,d));
+
+            }
+            return defaultDestinations;
+        }
+
+        internal static List<Destination> LoadDestinationDefinitions(out string descr, string file = null)
+        {
+            LoadRootNode(file);
             List<Destination> destinations = new List<Destination>();
+
+            descr = null;
 
             try
             {
                 if (rootNode != null && rootNode.HasNode(node_launchDestinations))
                 {
+                    if (rootNode.GetNode(node_launchDestinations).HasValues("DESCR"))
+                        descr = rootNode.GetNode(node_launchDestinations).GetValue("DESCR");
                     foreach (var destNode in rootNode.GetNode(node_launchDestinations).GetNodes(node_destination))
                     {
                         destinations.Add(new Destination(int.Parse(destNode.GetValue(key_destId)), destNode.GetValue(key_destDesc))); ;

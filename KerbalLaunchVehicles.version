@@ -1,0 +1,25 @@
+{
+  "NAME": "Precise Editor",
+  "URL": "http://ksp.spacetux.net/avc/KerbalLaunchVehicles",
+  "DOWNLOAD": "https://github.com/linuxgurugamer/KerbalLaunchVehicles/releases",
+  "GITHUB": {
+    "USERNAME": "linuxgurugamer",
+    "REPOSITORY": "KerbalLaunchVehicles"
+  },
+  "VERSION": {
+    "MAJOR": 1,
+    "MINOR": 2,
+    "PATCH": 0,
+    "BUILD": 0
+  },
+  "KSP_VERSION": {
+    "MAJOR": 1,
+    "MINOR": 12,
+    "PATCH": 5
+  },
+  "KSP_VERSION_MIN": {
+    "MAJOR": 1,
+    "MINOR": 10,
+    "PATCH": 0
+  }
+}

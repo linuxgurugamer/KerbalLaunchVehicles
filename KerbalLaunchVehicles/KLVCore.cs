@@ -39,7 +39,7 @@ namespace KerbalLaunchVehicles
             {
                 if (_allDestinations == null)
                 {
-                    _allDestinations = SaveManager.LoadDestinationDefinitions();
+                    _allDestinations = SaveManager.LoadDestinationDefinitions(out string descr);
                 }
                 return _allDestinations;
             }
@@ -81,7 +81,7 @@ namespace KerbalLaunchVehicles
         internal static void Load()
         {
             // Need to load destinations before vehicles
-            AllDestinations = SaveManager.LoadDestinationDefinitions();
+            AllDestinations = SaveManager.LoadDestinationDefinitions(out string descr);
             AllVehicleFamilies = SaveManager.LoadConfigurations();
             UpdateAllVehicleNameSchemes();
         }
@@ -111,7 +111,8 @@ namespace KerbalLaunchVehicles
 
         internal static void AddDestination(string newName)
         {
-            AllDestinations.Add(new Destination(GetNewDestinationId(), newName));
+            if (!AllDestinations.Any(x => x.Name== newName))
+                AllDestinations.Add(new Destination(GetNewDestinationId(), newName));
         }
 
         internal static void RemoveDestination(int id)
@@ -229,11 +230,18 @@ namespace KerbalLaunchVehicles
             return _allDestinations.Except(excluding).ToList();
         }
 
-        internal static List<string> GetAllDestinationName()
+        internal static List<string> GetAllDestinationName(List<Destination> newList = null)
         {
-            if (_allDestinationNames == null)
+            if (newList != null)
             {
-                _allDestinationNames = AllDestinations.Select(x => x.Name).ToList();
+                _allDestinationNames = newList.Select(x => x.Name).ToList();
+            }
+            else
+            {
+                if (_allDestinationNames == null)
+                {
+                    _allDestinationNames = AllDestinations.Select(x => x.Name).ToList();
+                }
             }
             return _allDestinationNames;
         }

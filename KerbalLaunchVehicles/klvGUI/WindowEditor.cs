@@ -14,7 +14,7 @@ namespace KerbalLaunchVehicles.klvGUI
         {
             base.Awake();
 
-            visibleInScenes = ApplicationLauncher.AppScenes.SPH | ApplicationLauncher.AppScenes.VAB;
+            //visibleInScenes = ApplicationLauncher.AppScenes.SPH | ApplicationLauncher.AppScenes.VAB;
             WindowRect = new Rect(GlobalSettings.EditorWindowPos, new Vector2(500, 400));
             KLVCore.EditWindow = this;
         }

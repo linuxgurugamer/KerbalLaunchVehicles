@@ -1,0 +1,17 @@
+D:\Users\jbb\github\KerbalLaunchVehicles\KerbalLaunchVehicles\KerbalLaunchVehicles\bin\Debug\KerbalLaunchVehicles.dll
+D:\Users\jbb\github\KerbalLaunchVehicles\KerbalLaunchVehicles\KerbalLaunchVehicles\bin\Debug\KerbalLaunchVehicles.pdb
+D:\Users\jbb\github\KerbalLaunchVehicles\KerbalLaunchVehicles\KerbalLaunchVehicles\obj\Debug\KerbalLaunchVehicles.csproj.AssemblyReference.cache
+D:\Users\jbb\github\KerbalLaunchVehicles\KerbalLaunchVehicles\KerbalLaunchVehicles\obj\Debug\KerbalLaunchVehicles.csproj.CoreCompileInputs.cache
+D:\Users\jbb\github\KerbalLaunchVehicles\KerbalLaunchVehicles\KerbalLaunchVehicles\obj\Debug\KerbalLaunchVehicles.dll
+D:\Users\jbb\github\KerbalLaunchVehicles\KerbalLaunchVehicles\KerbalLaunchVehicles\obj\Debug\KerbalLaunchVehicles.pdb
+D:\Users\jbb\github\KerbalLaunchVehicles\KerbalLaunchVehicles\obj\Debug\KerbalLaunchVehicles.csproj.AssemblyReference.cache
+D:\Users\jbb\github\KerbalLaunchVehicles\KerbalLaunchVehicles\obj\Debug\KerbalLaunchVehicles.csproj.CoreCompileInputs.cache
+D:\Users\jbb\github\KerbalLaunchVehicles\KerbalLaunchVehicles\obj\Debug\KerbalLaunchVehicles.dll
+D:\Users\jbb\github\KerbalLaunchVehicles\KerbalLaunchVehicles\obj\Debug\KerbalLaunchVehicles.pdb
+D:\Users\jbb\github\KerbalLaunchVehicles\KerbalLaunchVehicles\bin\Debug\KerbalLaunchVehicles.dll
+D:\Users\jbb\github\KerbalLaunchVehicles\KerbalLaunchVehicles\bin\Debug\KerbalLaunchVehicles.pdb
+D:\Users\jbb\github\KerbalLaunchVehicles\KerbalLaunchVehicles\bin\Debug\ClickThroughBlocker.dll
+D:\Users\jbb\github\KerbalLaunchVehicles\KerbalLaunchVehicles\bin\Debug\ToolbarControl.dll
+D:\Users\jbb\github\KerbalLaunchVehicles\KerbalLaunchVehicles\bin\Debug\ClickThroughBlocker.pdb
+D:\Users\jbb\github\KerbalLaunchVehicles\KerbalLaunchVehicles\bin\Debug\ToolbarControl.pdb
+D:\Users\jbb\github\KerbalLaunchVehicles\KerbalLaunchVehicles\obj\Debug\KerbalLaunchVehicles.csproj.CopyComplete
